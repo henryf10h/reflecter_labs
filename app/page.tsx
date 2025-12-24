@@ -4,6 +4,7 @@ import WhatWeDo from '@/components/WhatWeDo'
 import Values from '@/components/Values'
 import Achievements from '@/components/Achievements'
 import Blockchains from '@/components/Blockchains'
+import ContactForm from '@/components/ContactForm'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
         <Values />
         <Achievements />
         <Blockchains />
+        <ContactForm />
       </main>
       <Footer />
     </>

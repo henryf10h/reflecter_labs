@@ -2,7 +2,7 @@ import styles from './WhatWeDo.module.css'
 
 const missions = [
   {
-    title: 'Smart Contracts & Web Development',
+    title: 'Smart Contracts & Project Development',
     description: 'We build audited smart contracts and web applications that work under pressure. Our code is production-ready, secure and scalable.'
   },
   {

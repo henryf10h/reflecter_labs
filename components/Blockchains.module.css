@@ -1,23 +1,43 @@
 .section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 5rem 2rem;
-  border-top: 1px solid var(--border);
+  padding: 6rem 2rem;
   text-align: center;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
 }
 
+.section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.015) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 15s ease-in-out infinite;
+}
+
+
 .title {
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   margin-bottom: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .description {
-  color: var(--text-light);
-  font-size: 1rem;
-  max-width: 600px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 650px;
   margin: 0 auto 3rem;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .grid {
@@ -27,55 +47,131 @@
   margin-top: 3rem;
 }
 
+/* Main Blockchains - Large and Prominent */
+.mainGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto 4rem;
+}
+
 .item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+
+.mainItem {
+  background: var(--bg-card);
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  border: 2px solid var(--primary);
+  text-align: center;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.mainItem:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.mainItem .logo {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.mainItem .name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.activeBadge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Other Blockchains Section */
+.otherSection {
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border);
+}
+
+.otherTitle {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.otherGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.otherItem {
+  background: var(--bg-secondary);
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  text-align: center;
+  opacity: 0.6;
   transition: all 0.3s ease;
 }
 
-.item:hover {
-  border-color: var(--text);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+.otherItem:hover {
+  opacity: 0.8;
+  transform: translateY(-4px);
 }
 
-.logo {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
+.logoSmall {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
 }
 
-.name {
-  font-size: 1rem;
-  font-weight: 700;
+.nameSmall {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
+@media (max-width: 968px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .otherGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .section {
     padding: 4rem 1.5rem;
   }
 
-  .grid {
+  .otherGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-  }
-
-  .item {
-    padding: 1.5rem;
-  }
-
-  .logo {
-    font-size: 2.5rem;
   }
 }

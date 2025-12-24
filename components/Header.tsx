@@ -6,17 +6,22 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <Image 
-            src="/logoreflecter.png" 
-            alt="Reflecter Labs" 
-            width={150} 
+          <Image
+            src="/logoreflecter.png"
+            alt="Reflecter Labs"
+            width={150}
             height={40}
             style={{ width: '150px', height: 'auto' }}
           />
         </div>
         <nav className={styles.nav}>
-          <button className={styles.ctaButton}>Contact</button>
+          <a href="#what-we-do" className={styles.navLink}>What We Do</a>
+          <a href="#values" className={styles.navLink}>Values</a>
+          <a href="#achievements" className={styles.navLink}>Achievements</a>
         </nav>
+        <div className={styles.ctaWrapper}>
+          <a href="#contact" className={styles.ctaButton}>Contact</a>
+        </div>
       </div>
     </header>
   )

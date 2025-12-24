@@ -2,18 +2,20 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   padding: 1.25rem 2rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  gap: 2rem;
 }
 
 .logo {
@@ -21,6 +23,12 @@
   font-weight: 700;
   letter-spacing: -0.5px;
   color: var(--primary);
+  transition: transform 0.3s ease;
+  justify-self: start;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .logo img {
@@ -29,26 +37,81 @@
 
 .nav {
   display: flex;
-  gap: 2.5rem;
+  gap: 3rem;
   align-items: center;
+  justify-content: center;
+}
+
+.navLink {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.navLink:hover {
+  color: var(--primary);
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.ctaWrapper {
+  justify-self: end;
 }
 
 .ctaButton {
-  background: var(--secondary);
+  background: var(--primary);
   color: white;
-  padding: 0.65rem 1.5rem;
-  border-radius: 4px;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+  box-shadow: var(--shadow-md);
+  display: inline-block;
 }
 
 .ctaButton:hover {
-  background: var(--accent);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+  background: var(--primary-light);
+}
+
+.ctaButton:active {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 968px) {
+  .container {
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .ctaWrapper {
+    justify-self: end;
+  }
 }
 
 @media (max-width: 768px) {
@@ -56,12 +119,8 @@
     padding: 1rem 1.5rem;
   }
 
-  .nav {
-    gap: 1rem;
-  }
-
   .ctaButton {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
   }
 }
