@@ -40,8 +40,8 @@ export default function Footer() {
             <h4>Contact</h4>
             <p>
               <strong>Email:</strong><br />
-              <a href="mailto:contact@reflecterlabs.com" className={styles.contactLink}>
-                contact@reflecterlabs.com
+              <a href="mailto:contact@reflecterlabs.xyz" className={styles.contactLink}>
+                contact@reflecterlabs.xyz
               </a>
             </p>
             <p>
