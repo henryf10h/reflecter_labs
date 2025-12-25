@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import styles from './ContactForm.module.css'
-import { insertContactLead } from '@/lib/supabase'
+import { insertContactLead, updateContactLeadAction } from '@/lib/supabase'
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -11,8 +11,9 @@ export default function ContactForm() {
         serviceInterest: 'Smart Contracts & Project Development' as 'Smart Contracts & Project Development' | 'Research & Innovation',
         message: ''
     })
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+    const [status, setStatus] = useState<'idle' | 'loading' | 'choosing' | 'completed' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState('')
+    const [leadId, setLeadId] = useState<string | null>(null)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -37,8 +38,12 @@ export default function ContactForm() {
 
             console.log('Successfully saved to Supabase:', result)
 
-            // Marcar como éxito
-            setStatus('success')
+            if (result && result.id) {
+                setLeadId(result.id)
+            }
+
+            // Marcar como choosing para que elija la opción
+            setStatus('choosing')
             setFormData({
                 name: '',
                 email: '',
@@ -47,17 +52,8 @@ export default function ContactForm() {
                 message: ''
             })
 
-            // Mantener el mensaje de éxito visible
-            // No auto-resetear a idle para que el usuario vea las opciones
         } catch (error: any) {
             console.error('Error submitting form:', error)
-            console.error('Error details:', {
-                message: error?.message,
-                code: error?.code,
-                details: error?.details,
-                hint: error?.hint
-            })
-
             setStatus('error')
 
             // Mensaje de error más específico
@@ -73,8 +69,34 @@ export default function ContactForm() {
         }
     }
 
+    const handleAction = async (action: boolean) => {
+        // action: 0/false for Reserve (Call), 1/true for WhatsApp
+
+        // Redireccionar inmediatamente
+        if (action) {
+            // WhatsApp
+            window.open('https://wa.me/5491173661972', '_blank')
+        } else {
+            // Calendar
+            window.open('https://calendar.app.google/wArBbQyT49pLD45y8', '_blank')
+        }
+
+        // Actualizar en background si tenemos ID
+        if (leadId) {
+            try {
+                await updateContactLeadAction(leadId, action)
+            } catch (err) {
+                console.error('Error updating action choice:', err)
+                // No mostramos error al usuario ya que la redirección ocurrió
+            }
+        }
+
+        setStatus('completed')
+    }
+
     const handleNewMessage = () => {
         setStatus('idle')
+        setLeadId(null)
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -119,7 +141,7 @@ export default function ContactForm() {
                     </div>
 
                     <form className={styles.form} onSubmit={handleSubmit}>
-                        {status !== 'success' ? (
+                        {status === 'idle' || status === 'loading' || status === 'error' ? (
                             <>
                                 <div className={styles.formGroup}>
                                     <label htmlFor="name">Name *</label>
@@ -209,21 +231,36 @@ export default function ContactForm() {
                                     </p>
                                 )}
                             </>
+                        ) : status === 'choosing' ? (
+                            <div className={styles.successContainer}>
+                                <p className={styles.successMessage}>
+                                    ✓ Data saved successfully! Please choose how you would like to continue:
+                                </p>
+                                <div className={styles.successActions}>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAction(false)}
+                                        className={styles.reserveButton}
+                                    >
+                                        📅 Book a Call
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleAction(true)}
+                                        className={styles.whatsappButton}
+                                    >
+                                        💬 Contact by Whatsapp
+                                    </button>
+                                </div>
+                            </div>
                         ) : (
                             <div className={styles.successContainer}>
                                 <p className={styles.successMessage}>
-                                    ✓ Thank you! Your message has been received successfully.
-                                    We'll get back to you within 24 hours.
+                                    ✓ Thank you! We made a note of your preference.
+                                    <br />
+                                    Your message has been received and we'll get back to you within 24 hours.
                                 </p>
                                 <div className={styles.successActions}>
-                                    <a
-                                        href="https://wa.me/5491173661972"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={styles.whatsappButton}
-                                    >
-                                        💬 Contact via WhatsApp
-                                    </a>
                                     <button
                                         onClick={handleNewMessage}
                                         className={styles.newMessageButton}

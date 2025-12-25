@@ -13,6 +13,7 @@ export interface ContactLead {
     company?: string
     service_interest: 'Smart Contracts & Project Development' | 'Research & Innovation'
     message: string
+    action?: boolean // 0/false = Call, 1/true = WhatsApp
     created_at?: string
     updated_at?: string
 }
@@ -27,6 +28,22 @@ export async function insertContactLead(lead: Omit<ContactLead, 'id' | 'created_
 
     if (error) {
         console.error('Error inserting contact lead:', error)
+        throw error
+    }
+
+    return data
+}
+
+// Function to update the action of a contact lead
+export async function updateContactLeadAction(id: string, action: boolean) {
+    const { data, error } = await supabase
+        .from('contact_leads')
+        .update({ action })
+        .eq('id', id)
+        .select()
+
+    if (error) {
+        console.error('Error updating contact lead action:', error)
         throw error
     }
 
