@@ -1,0 +1,823 @@
+/* Layout - Fixed container to prevent body scroll */
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.leftPanel {
+    flex: 0 0 45%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-dark);
+}
+
+.rightPanel {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2rem 4rem;
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+}
+
+/* Carousel */
+.carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out, transform 10s ease-out;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.1);
+}
+
+.slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 10;
+}
+
+/* Navigation / Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    padding: 0.625rem 1.25rem;
+    border-radius: 50px;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.backButton:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stepsText {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Form Styles */
+.formContainer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+
+.progressContainer {
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.6s ease-out 0.1s backwards;
+}
+
+.progressBar {
+    height: 6px;
+    background: var(--border-light);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--gradient-primary);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sectionHeader {
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out 0.2s backwards;
+}
+
+.stepTitle {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.stepDescription {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Inputs & Structure */
+.section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+    animation: fadeInUp 0.6s ease-out backwards;
+    transition: all 0.3s ease;
+}
+
+.section:hover {
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-lg);
+}
+
+.sectionTitle {
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.fieldGroup {
+    margin-bottom: 1.5rem;
+}
+
+.fieldGroup:last-child {
+    margin-bottom: 0;
+}
+
+.label {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 0.625rem;
+    font-weight: 600;
+}
+
+.required {
+    color: #c00;
+    margin-left: 2px;
+}
+
+.input,
+.select,
+.textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: var(--text-light);
+    opacity: 0.6;
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23000' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+}
+
+.col {
+    flex: 1;
+}
+
+/* Radio & Checkbox Cards */
+.radioGrid,
+.checkboxGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.875rem;
+}
+
+.radioCard,
+.checkboxCard {
+    cursor: pointer;
+    position: relative;
+}
+
+.optionInput {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.optionLabel {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1rem;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
+    gap: 0.5rem;
+    height: 100%;
+    color: var(--text);
+}
+
+.optionInput:checked+.optionLabel {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.optionLabel:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+/* Range Slider */
+.rangeWrapper {
+    padding: 1rem 0;
+}
+
+.rangeInput {
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    background: var(--border-light);
+    outline: none;
+    accent-color: var(--primary);
+}
+
+/* Buttons */
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    animation: fadeInUp 0.6s ease-out 0.3s backwards;
+}
+
+.prevBtn {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text);
+    padding: 0.875rem 1.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.prevBtn:hover:not(:disabled) {
+    background: var(--bg-secondary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.prevBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.nextBtn {
+    background: var(--primary);
+    border: none;
+    color: white;
+    padding: 0.875rem 2.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.nextBtn:hover {
+    background: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+.submitBtn {
+    background: var(--primary);
+    border: none;
+    color: white;
+    padding: 1.125rem 2.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.submitBtn:hover {
+    background: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Welcome Screen */
+.welcomeContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.welcomeContent {
+    text-align: center;
+}
+
+.welcomeBadge {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background: var(--gradient-card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+}
+
+.welcomeTitle {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.welcomeSubtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcomeInfo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.infoCard {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.infoCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+}
+
+.infoIcon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.infoCard h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.infoCard p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.welcomeSteps {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    text-align: left;
+}
+
+.welcomeSteps h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.welcomeSteps ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.welcomeSteps li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.welcomeSteps li:last-child {
+    border-bottom: none;
+}
+
+.startButton {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 1.125rem 3rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.startButton:hover {
+    background: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+.welcomeNote {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-style: italic;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Success Screen */
+.successContainer {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 0;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.successContent {
+    text-align: center;
+}
+
+.successIcon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.successTitle {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+
+.successMessage {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.successStats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.statItem {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.statLabel {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.successActions {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.successActions h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.successActions p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.calendarButton {
+    display: block;
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.calendarButton:hover {
+    background: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+.restartButton {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+    border: 2px solid var(--border);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.restartButton:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.successFooter {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.successFooter p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.successFooter a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.successFooter a:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsiveness */
+@media (max-width: 968px) {
+    .leftPanel {
+        display: none;
+    }
+
+    .rightPanel {
+        padding: 2rem 2rem;
+    }
+
+    .section {
+        padding: 1.5rem;
+    }
+
+    .radioGrid,
+    .checkboxGrid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .rightPanel {
+        padding: 1.5rem 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .buttonGroup {
+        flex-direction: column;
+    }
+
+    .prevBtn,
+    .nextBtn {
+        width: 100%;
+    }
+
+    .radioGrid,
+    .checkboxGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Summary Grid */
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.summaryItem {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.summaryLabel {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.summaryValue {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* Download Button */
+.downloadButton {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+    border: 2px solid var(--border);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    margin-bottom: 1rem;
+}
+
+.downloadButton:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}

@@ -2,13 +2,13 @@ import styles from './WhatWeDo.module.css'
 
 const missions = [
   {
-    title: 'Smart Contracts & Project Development',
-    description: 'We build audited smart contracts and web applications that work under pressure. Our code is production-ready, secure and scalable.'
-  },
-  {
     title: 'Research & Innovation',
     description: "We explore the boundaries of what's possible in Web3, cryptography and decentralized systems. We innovate where others see barriers."
-  }
+  },
+  {
+    title: 'Project Development & Collaborations',
+    description: 'We build audited smart contracts and web applications that work under pressure. Our code is production-ready, secure and scalable.'
+  },
 ]
 
 const focusAreas = [

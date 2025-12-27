@@ -190,13 +190,12 @@ export default function ContactForm() {
                                         value={formData.serviceInterest}
                                         onChange={handleChange}
                                         required
-                                        className={styles.select}
-                                    >
-                                        <option value="Smart Contracts & Project Development">
-                                            Smart Contracts & Project Development
-                                        </option>
+                                        className={styles.select}>
                                         <option value="Research & Innovation">
                                             Research & Innovation
+                                        </option>
+                                        <option value="Consulting & Auditing">
+                                            Consulting & Auditing
                                         </option>
                                     </select>
                                 </div>

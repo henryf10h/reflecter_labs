@@ -13,7 +13,7 @@ export default function Hero() {
           We build audited smart contracts, innovative dApps, and cutting-edge blockchain solutions that push the boundaries of what's possible in Web3.
         </p>
         <div className={styles.ctas}>
-          <a href="#contact" className={styles.primaryCta}>Start Your Project</a>
+          <a href="/start-project" className={styles.primaryCta}>Start Projects & Collabs</a>
           <a href="#achievements" className={styles.secondaryCta}>View Our Work</a>
         </div>
       </div>

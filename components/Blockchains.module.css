@@ -1,7 +1,7 @@
 .section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   text-align: center;
   background: var(--bg);
   position: relative;
@@ -47,111 +47,108 @@
   margin-top: 3rem;
 }
 
-/* Main Blockchains - Large and Prominent */
-.mainGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  max-width: 600px;
-  margin: 0 auto 4rem;
-}
-
-.item {
-  display: flex;
-  flex-direction: column;
-  max-width: 800px;
-  margin: 0 auto 4rem;
-}
-
-.mainItem {
-  background: var(--bg-card);
-  padding: 2rem 1.5rem;
-  border-radius: 12px;
-  border: 2px solid var(--primary);
+/* Active Networks Title */
+.activeTitle {
   text-align: center;
-  transition: all 0.3s ease;
-  animation: fadeInUp 0.6s ease-out backwards;
-}
-
-.mainItem:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary-light);
-}
-
-.mainItem .logo {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.mainItem .name {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 0.75rem;
-}
-
-.activeBadge {
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  background: var(--primary);
-  color: white;
-  border-radius: 16px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Other Blockchains Section */
-.otherSection {
-  margin-top: 5rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--border);
-}
-
-.otherTitle {
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text-light);
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.otherGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  max-width: 900px;
-  margin: 0 auto;
+/* Main Blockchains - Just Logos */
+.mainGrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  margin: 0 auto 3rem;
+  padding: 0;
 }
 
-.otherItem {
-  background: var(--bg-secondary);
-  padding: 1.5rem 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  text-align: center;
-  opacity: 0.6;
+.logoWrapper {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.logoWrapper:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.mainLogo {
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
   transition: all 0.3s ease;
 }
 
-.otherItem:hover {
-  opacity: 0.8;
-  transform: translateY(-4px);
+.logoWrapper:hover .mainLogo {
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
 }
 
-.logoSmall {
-  font-size: 2rem;
-  margin-bottom: 0.75rem;
+/* Coming Soon - Infinite Carousel */
+.otherSection {
+  margin-top: 2rem;
+  padding-top: 0;
 }
 
-.nameSmall {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-secondary);
+.otherTitle {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.carouselContainer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem 0;
+}
+
+.carouselTrack {
+  display: flex;
+  gap: 4rem;
+  animation: scroll 30s linear infinite;
+  width: fit-content;
+}
+
+.carouselTrack:hover {
+  animation-play-state: paused;
+}
+
+.carouselItem {
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.carouselItem:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.carouselLogo {
+  object-fit: contain;
+  filter: grayscale(80%) opacity(0.6) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+}
+
+.carouselItem:hover .carouselLogo {
+  filter: grayscale(40%) opacity(0.8) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* Infinite Scroll Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-33.333%);
+  }
 }
 
 @media (max-width: 968px) {

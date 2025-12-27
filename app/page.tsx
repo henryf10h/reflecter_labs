@@ -14,9 +14,9 @@ export default function Home() {
       <main>
         <Hero />
         <WhatWeDo />
+        <Blockchains />
         <Values />
         <Achievements />
-        <Blockchains />
         <ContactForm />
       </main>
       <Footer />
