@@ -302,10 +302,6 @@ export default function StartProjectPage() {
                     <label className={styles.label}>Telegram Handle</label>
                     <input type="text" className={styles.input} placeholder="@username" value={formData.step1.telegram || ''} onChange={(e) => updateData('step1', 'telegram', e.target.value)} />
                 </div>
-                <div className={styles.fieldGroup}>
-                    <label className={styles.label}>Wallet Address <span className={styles.required}>*</span></label>
-                    <input type="text" className={styles.input} placeholder="0x..." value={formData.step1.wallet || ''} onChange={(e) => updateData('step1', 'wallet', e.target.value)} />
-                </div>
             </div>
 
             <div className={styles.section}>
