@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import WhatWeDo from '@/components/WhatWeDo'
 import Values from '@/components/Values'
 import Achievements from '@/components/Achievements'
+import Roadmap from '@/components/Roadmap'
 import Blockchains from '@/components/Blockchains'
 import ContactForm from '@/components/ContactForm'
 import Footer from '@/components/Footer'
@@ -17,6 +18,7 @@ export default function Home() {
         <Blockchains />
         <Values />
         <Achievements />
+        <Roadmap />
         <ContactForm />
       </main>
       <Footer />

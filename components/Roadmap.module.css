@@ -1,0 +1,387 @@
+.section {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 6rem 0;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 0 2rem;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.sliderWrapper {
+    position: relative;
+}
+
+.timelineWrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 4rem;
+
+    /* Box Styling similar to WhatWeDo focusAreas */
+    background: var(--bg-card);
+    border: 3px solid var(--primary);
+    border-radius: 16px;
+    box-shadow: var(--shadow-xl);
+
+    /* Ensure z-index context for pseudo-elements */
+    z-index: 1;
+}
+
+.timelineWrapper::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(135deg, #000000 0%, #333333 100%);
+    border-radius: 16px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.timelineWrapper:hover::before {
+    opacity: 0.05;
+}
+
+.scrollContainer {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2rem 1rem;
+    padding-bottom: 3rem;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+    display: none;
+}
+
+/* Timeline Track */
+.timeline {
+    display: flex;
+    gap: 0;
+    /* Remove gap, handle spacing via item padding/width */
+    position: relative;
+    width: max-content;
+    min-width: 100%;
+    padding-top: 0;
+}
+
+/* Base Line (Black/Gray) */
+/* We align the line perfectly with the center of the dots */
+/* Dot total height = 16px + 6px border = 22px? Let's fix dot size first */
+/* Let's define Dot Size = 20px (content) + 6px (border total, 3px each) = 26px */
+/* Center = 13px */
+/* Line Height = 2px */
+/* Line Top = 13px - 1px = 12px */
+/* We add some top padding to the item to breathe, say 10px. */
+/* Total Top = 10px + 12px = 22px */
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    /* 20px padding-top + 12px center */
+    left: 175px;
+    /* Center of first item (350px / 2) */
+    right: 175px;
+    /* Center of last item */
+    height: 2px;
+    background: #2D2D2D;
+    /* Cleaner dark gray */
+    z-index: 0;
+}
+
+/* Progress Line (Green) */
+.progressLine {
+    position: absolute;
+    top: 32px;
+    left: 175px;
+    height: 2px;
+    background: #10B981;
+    /* Green */
+    z-index: 1;
+    transition: width 1s ease-out;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    /* Glow effect */
+}
+
+.item {
+    position: relative;
+    width: 350px;
+    /* Wider cards */
+    padding: 20px 15px 0;
+    /* Top padding for dot space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+/* Connector Dot */
+.dot {
+    width: 24px;
+    height: 24px;
+    background: var(--bg);
+    /* Opaque white/dark to cover line */
+    border: 3px solid #333;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    z-index: 5;
+    position: relative;
+    /* No 'top' adjustment needed if flow is natural, 
+       but we want it z-indexed above line at padding-top */
+}
+
+/* Completed Status - Clean Green Ring */
+.item.completed .dot {
+    background: var(--bg);
+    /* Keep background to hide line underneath */
+    border-color: #10B981;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+/* Make the last completed dot solid? Or all hollow? */
+/* User image had solid green active dot. Let's try styled variant */
+
+.item.completed:hover .dot {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.2);
+}
+
+.content {
+    background: var(--bg-card);
+    padding: 1.75rem;
+    border-radius: 16px;
+    /* Smooth corners */
+    border: 1px solid var(--border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Arrow - Refined */
+.content::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 16px;
+    height: 16px;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    z-index: 6;
+    /* Cover line if needed */
+}
+
+/* Completed Content Styling */
+.item.completed .content {
+    border-color: #10B981;
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.03) 0%, var(--bg-card) 60%);
+}
+
+.item.completed .content::before {
+    border-color: #10B981;
+    background: var(--bg-card);
+    /* Match gradient start roughly or just bg */
+}
+
+.item.completed .content:hover {
+    box-shadow: 0 15px 40px -10px rgba(16, 185, 129, 0.15);
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.08) 0%, var(--bg-card) 60%);
+    transform: translateY(-4px);
+}
+
+.content:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.content:hover::before {
+    border-color: var(--primary);
+}
+
+.date {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.item.completed .date {
+    color: #10B981;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+    min-height: 2.5rem;
+    line-height: 1.3;
+}
+
+.description {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.tag {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.85rem;
+    background: var(--bg-secondary);
+    border-radius: 50px;
+    /* Pill shape */
+    color: var(--text-secondary);
+    font-weight: 600;
+    border: 1px solid var(--border-light);
+}
+
+/* Gold Status - "Before & After" Milestone */
+.item.gold .dot {
+    background: var(--bg);
+    border-color: #F59E0B;
+    /* Gold/Amber */
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+    animation: goldPulse 3s infinite;
+}
+
+.item.gold:hover .dot {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0.3);
+    border-color: #FFD700;
+    /* Bright Gold on hover */
+}
+
+.item.gold .content {
+    border-color: #F59E0B;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(0, 0, 0, 0) 100%), var(--bg-card);
+    box-shadow: 0 10px 30px -5px rgba(245, 158, 11, 0.15);
+}
+
+.item.gold .content::before {
+    border-color: #F59E0B;
+    background: var(--bg-card);
+}
+
+.item.gold .content:hover {
+    box-shadow: 0 20px 50px -10px rgba(245, 158, 11, 0.3);
+    border-color: #FFD700;
+    transform: translateY(-6px) scale(1.02);
+}
+
+.item.gold .date {
+    color: #F59E0B;
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+@keyframes goldPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    }
+}
+
+/* Nav Buttons Re-styled */
+.navBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.navBtn:hover {
+    background: white;
+    color: black;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.prevBtn {
+    left: -2rem;
+}
+
+.nextBtn {
+    right: -2rem;
+}
+
+@media (max-width: 768px) {
+    .timelineWrapper {
+        padding: 0 1rem;
+    }
+
+    .navBtn {
+        display: none;
+    }
+
+    .item {
+        width: 300px;
+        padding-top: 20px;
+    }
+
+    .timeline::before {
+        left: 150px;
+        right: 150px;
+    }
+
+    .progressLine {
+        left: 150px;
+    }
+}

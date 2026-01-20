@@ -1,0 +1,132 @@
+.kanizsa {
+    border-radius: 165px;
+    width: 330px;
+    height: 330px;
+    margin: 50px auto;
+    padding: 0;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.kanizsa:hover {
+    cursor: pointer;
+}
+
+.kanizsa>* {
+    transition: transform 1.5s;
+}
+
+.kanizsa:hover>* {
+    transition: transform 0.5s;
+    transform: rotate(180deg);
+}
+
+.top {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    left: 130px;
+}
+
+.left {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 25px;
+    top: 175px;
+    transform: rotate(-120deg);
+}
+
+.right {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 230px;
+    top: 175px;
+    transform: rotate(120deg);
+}
+
+.top::before,
+.left::before,
+.right::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 90px;
+    position: absolute;
+    top: 0px;
+    left: 60px;
+    border-right: 2px solid #000;
+    transform: rotate(-30deg);
+}
+
+.top::after,
+.left::after,
+.right::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 90px;
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    border-right: 2px solid #000;
+    transform: rotate(30deg);
+}
+
+.rightcircle {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    left: 250px;
+    top: 45px;
+    transform: rotate(-45deg);
+}
+
+.leftcircle {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    left: 0px;
+    top: 45px;
+    transform: rotate(-166deg);
+}
+
+.bottomcircle {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    left: 130px;
+    top: 270px;
+    transform: rotate(73deg);
+}
+
+.rightcircle::before,
+.leftcircle::before,
+.bottomcircle::before {
+    content: '';
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-right: 40px solid #000;
+    border-top: 40px solid #000;
+    border-left: 40px solid transparent;
+    border-bottom: 40px solid #000;
+    border-radius: 80px;
+}
+
+.rightcircle::after,
+.leftcircle::after,
+.bottomcircle::after {
+    content: '';
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-right: 40px solid #000;
+    border-top: 40px solid #000;
+    border-left: 40px solid transparent;
+    border-bottom: 40px solid #000;
+    border-radius: 80px;
+    transform: rotate(30deg);
+}

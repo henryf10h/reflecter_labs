@@ -18,6 +18,7 @@ export default function Header() {
           <a href="#what-we-do" className={styles.navLink}>What We Do</a>
           <a href="#values" className={styles.navLink}>Values</a>
           <a href="#achievements" className={styles.navLink}>Achievements</a>
+          <a href="#roadmap" className={styles.navLink}>Our Journey</a>
         </nav>
         <div className={styles.ctaWrapper}>
           <a href="#contact" className={styles.ctaButton}>Contact</a>
