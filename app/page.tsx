@@ -7,10 +7,12 @@ import Roadmap from '@/components/Roadmap'
 import Blockchains from '@/components/Blockchains'
 import ContactForm from '@/components/ContactForm'
 import Footer from '@/components/Footer'
+import AnimatedBackground from '@/components/AnimatedBackground'
 
 export default function Home() {
   return (
     <>
+      <AnimatedBackground />
       <Header />
       <main>
         <Hero />

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import styles from './StartProject.module.css'
 import { supabase } from '@/lib/supabase'
+import ContactForm from '@/components/ContactForm'
 
 // Image Carousel Component
 const ImageCarousel = () => {
@@ -790,6 +791,11 @@ export default function StartProjectPage() {
                 <ImageCarousel />
             </div>
             <div className={styles.rightPanel} ref={scrollContainerRef}>
+                {/* when the user hasn't started the project flow, show the
+                    same contact form that's used on the landing page */}
+                {!hasStarted && currentStep === 0 && (
+                    <ContactForm />
+                )}
                 {currentStep === 0 ? (
                     // Welcome Screen
                     <>

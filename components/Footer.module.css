@@ -1,22 +1,18 @@
 .footer {
-  background: #000000;
+  background: var(--primary);
   color: white;
-  padding: 5rem 2rem 3rem;
-  margin-top: 0;
+  padding: 5rem 2rem 2rem;
   position: relative;
   overflow: hidden;
 }
 
-.footer::before {
-  content: '';
+.bgDecoration {
   position: absolute;
-  top: -50%;
-  left: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: float 8s ease-in-out infinite;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .container {
@@ -28,69 +24,127 @@
 
 .content {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
   gap: 3rem;
-  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .section h4 {
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-  font-weight: 800;
-  color: white;
-}
-
-.section:last-child {
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
-}
-
-.section:last-child:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-4px);
-}
-
-.logo {
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.section p {
+/* Brand Section */
+.logo {
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.tagline {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
-  line-height: 1.8;
-  margin-bottom: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
 }
 
-.section a {
-  color: rgba(255, 255, 255, 0.7);
-  transition: color 0.3s ease;
+.location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
 }
 
-.section a:hover {
-  color: white;
+.location svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Contact Section */
+.contactList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .contactLink {
-  color: rgba(255, 255, 255, 0.9) !important;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  font-weight: 600;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
-  display: inline-block;
+}
+
+.contactLink svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
 }
 
 .contactLink:hover {
-  color: white !important;
-  transform: translateX(3px);
+  color: white;
+  transform: translateX(5px);
 }
 
-.donationText {
+.contactLink:hover svg {
+  opacity: 1;
+}
+
+/* Social Section */
+.socialGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
   font-size: 0.9rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.socialLink:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  color: white;
+}
+
+.socialIcon {
+  font-size: 1.1rem;
+}
+
+.socialName {
+  font-weight: 500;
+}
+
+/* Support Section */
+.donationText {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.6;
   margin-bottom: 1.5rem;
 }
 
@@ -107,97 +161,106 @@
 }
 
 .addressLabel {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .addressBox {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
-  transition: all 0.3s ease;
-}
-
-.addressBox:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
 }
 
 .addressShort {
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.9);
-  flex: 1;
+  font-family: 'SF Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.5px;
 }
 
 .copyButton {
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: auto;
+}
+
+.copyButton svg {
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .copyButton:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
 }
 
-.copyButton:active {
-  transform: scale(0.95);
+.copyButton.copied {
+  background: #22c55e;
 }
 
-.socialLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.socialLinks a {
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.socialLinks a::before {
-  content: '→';
-  transition: transform 0.3s ease;
-}
-
-.socialLinks a:hover {
+.copyButton.copied svg {
   color: white;
-  transform: translateX(5px);
 }
 
-.socialLinks a:hover::before {
-  transform: translateX(5px);
-}
-
+/* Bottom Bar */
 .bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 2rem;
-  text-align: center;
+}
+
+.bottomContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bottom p {
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.9rem;
 }
 
-@media (max-width: 968px) {
+.bottomLinks {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bottomLinks a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.bottomLinks a:hover {
+  color: white;
+}
+
+.divider {
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
   .content {
     grid-template-columns: repeat(2, 1fr);
     gap: 2.5rem;
@@ -206,11 +269,39 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 3rem 1.5rem 2rem;
+    padding: 3rem 1.5rem 1.5rem;
   }
 
   .content {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .section h4 {
+    margin-bottom: 1rem;
+  }
+
+  .socialGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .bottomContent {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .socialGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .addressBox {
+    padding: 0.625rem 0.875rem;
+  }
+
+  .addressShort {
+    font-size: 0.8rem;
   }
 }
