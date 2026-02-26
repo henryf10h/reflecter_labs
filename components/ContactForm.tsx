@@ -1,9 +1,12 @@
 'use client'
+
 import { useState } from 'react'
+import { useInView } from '@/lib/animations'
 import styles from './ContactForm.module.css'
 import { insertContactLead, updateContactLeadAction } from '@/lib/supabase'
 
 export default function ContactForm() {
+    const { ref: sectionRef, isInView } = useInView()
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -21,13 +24,6 @@ export default function ContactForm() {
         setErrorMessage('')
 
         try {
-            console.log('Saving to Supabase...', {
-                name: formData.name,
-                email: formData.email,
-                service_interest: formData.serviceInterest
-            })
-
-            // Guardar en Supabase
             const result = await insertContactLead({
                 name: formData.name,
                 email: formData.email,
@@ -36,13 +32,10 @@ export default function ContactForm() {
                 message: formData.message
             })
 
-            console.log('Successfully saved to Supabase:', result)
-
             if (result && result.id) {
                 setLeadId(result.id)
             }
 
-            // Marcar como choosing para que elija la opción
             setStatus('choosing')
             setFormData({
                 name: '',
@@ -56,13 +49,12 @@ export default function ContactForm() {
             console.error('Error submitting form:', error)
             setStatus('error')
 
-            // Mensaje de error más específico
             if (error?.code === '42501') {
-                setErrorMessage('Database permission error. Please contact the administrator to fix RLS policies.')
+                setErrorMessage('Database permission error. Please contact the administrator.')
             } else if (error?.message?.includes('row-level security')) {
-                setErrorMessage('Security policy error. Please disable RLS in Supabase or update the policies.')
+                setErrorMessage('Security policy error. Please contact support.')
             } else {
-                setErrorMessage(`Error: ${error?.message || 'Unknown error'}. Please try again or contact us directly at contact@reflecterlabs.com`)
+                setErrorMessage(`Error: ${error?.message || 'Unknown error'}. Please try again.`)
             }
 
             setTimeout(() => setStatus('idle'), 8000)
@@ -70,24 +62,17 @@ export default function ContactForm() {
     }
 
     const handleAction = async (action: boolean) => {
-        // action: 0/false for Reserve (Call), 1/true for WhatsApp
-
-        // Redireccionar inmediatamente
         if (action) {
-            // WhatsApp
             window.open('https://wa.me/5491173661972', '_blank')
         } else {
-            // Calendar
             window.open('https://calendar.app.google/wArBbQyT49pLD45y8', '_blank')
         }
 
-        // Actualizar en background si tenemos ID
         if (leadId) {
             try {
                 await updateContactLeadAction(leadId, action)
             } catch (err) {
                 console.error('Error updating action choice:', err)
-                // No mostramos error al usuario ya que la redirección ocurrió
             }
         }
 
@@ -107,97 +92,155 @@ export default function ContactForm() {
     }
 
     return (
-        <section className={styles.section} id="contact">
+        <section className={styles.section} id="contact" ref={sectionRef}>
+            <div className={styles.bgDecoration} />
+            
             <div className={styles.container}>
+                <div 
+                    className={styles.header}
+                    style={{
+                        opacity: isInView ? 1 : 0,
+                        transform: isInView ? 'translateY(0)' : 'translateY(30px)',
+                        transition: 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                    }}
+                >
+                    <span className={styles.label}>Get in Touch</span>
+                    <h2 className={styles.title}>Let&apos;s Build Together</h2>
+                    <p className={styles.subtitle}>
+                        Ready to bring your Web3 project to life? Get in touch with our team 
+                        and let&apos;s discuss how we can help you build the future.
+                    </p>
+                </div>
+
                 <div className={styles.content}>
-                    <div className={styles.info}>
-                        <h2 className={styles.title}>Let's Build Together</h2>
-                        <p className={styles.description}>
-                            Ready to bring your Web3 project to life? Get in touch with our team and let's discuss how we can help you build the future of decentralization.
-                        </p>
+                    <div 
+                        className={styles.info}
+                        style={{
+                            opacity: isInView ? 1 : 0,
+                            transform: isInView ? 'translateX(0)' : 'translateX(-30px)',
+                            transition: 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s'
+                        }}
+                    >
                         <div className={styles.benefits}>
                             <div className={styles.benefit}>
-                                <div className={styles.icon}>⚡</div>
-                                <div>
+                                <div className={styles.iconWrapper}>
+                                    <span className={styles.icon}>⚡</span>
+                                </div>
+                                <div className={styles.benefitContent}>
                                     <h4>Fast Response</h4>
-                                    <p>We'll get back to you within 24 hours</p>
+                                    <p>We&apos;ll get back to you within 24 hours</p>
                                 </div>
                             </div>
                             <div className={styles.benefit}>
-                                <div className={styles.icon}>🔒</div>
-                                <div>
+                                <div className={styles.iconWrapper}>
+                                    <span className={styles.icon}>🔒</span>
+                                </div>
+                                <div className={styles.benefitContent}>
                                     <h4>Confidential</h4>
                                     <p>Your information is safe with us</p>
                                 </div>
                             </div>
                             <div className={styles.benefit}>
-                                <div className={styles.icon}>💡</div>
-                                <div>
+                                <div className={styles.iconWrapper}>
+                                    <span className={styles.icon}>💡</span>
+                                </div>
+                                <div className={styles.benefitContent}>
                                     <h4>Free Consultation</h4>
                                     <p>No commitment, just valuable insights</p>
                                 </div>
                             </div>
                         </div>
+
+                        <div className={styles.contactInfo}>
+                            <div className={styles.contactItem}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                                <span>hello@reflecterlabs.xyz</span>
+                            </div>
+                            <div className={styles.contactItem}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                    <circle cx="12" cy="10" r="3" />
+                                </svg>
+                                <span>Latin America</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <form className={styles.form} onSubmit={handleSubmit}>
+                    <form 
+                        className={styles.form}
+                        onSubmit={handleSubmit}
+                        style={{
+                            opacity: isInView ? 1 : 0,
+                            transform: isInView ? 'translateX(0)' : 'translateX(30px)',
+                            transition: 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s'
+                        }}
+                    >
+                        <div className={styles.formGlow} />
+                        
                         {status === 'idle' || status === 'loading' || status === 'error' ? (
                             <>
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="name">Name *</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder="John Doe"
-                                    />
+                                <div className={styles.formRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="name">Name *</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="John Doe"
+                                        />
+                                    </div>
+
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="email">Email *</label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            placeholder="john@example.com"
+                                        />
+                                    </div>
                                 </div>
 
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="email">Email *</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder="john@example.com"
-                                    />
-                                </div>
+                                <div className={styles.formRow}>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="company">Company</label>
+                                        <input
+                                            type="text"
+                                            id="company"
+                                            name="company"
+                                            value={formData.company}
+                                            onChange={handleChange}
+                                            placeholder="Your Company"
+                                        />
+                                    </div>
 
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="company">Company *</label>
-                                    <input
-                                        type="text"
-                                        id="company"
-                                        name="company"
-                                        value={formData.company}
-                                        onChange={handleChange}
-                                        required
-                                        placeholder="Your Company"
-                                    />
-                                </div>
-
-                                <div className={styles.formGroup}>
-                                    <label htmlFor="serviceInterest">Service Interest *</label>
-                                    <select
-                                        id="serviceInterest"
-                                        name="serviceInterest"
-                                        value={formData.serviceInterest}
-                                        onChange={handleChange}
-                                        required
-                                        className={styles.select}>
-                                        <option value="Research & Innovation">
-                                            Research & Innovation
-                                        </option>
-                                        <option value="Consulting & Auditing">
-                                            Consulting & Auditing
-                                        </option>
-                                    </select>
+                                    <div className={styles.formGroup}>
+                                        <label htmlFor="serviceInterest">Service Interest *</label>
+                                        <select
+                                            id="serviceInterest"
+                                            name="serviceInterest"
+                                            value={formData.serviceInterest}
+                                            onChange={handleChange}
+                                            required
+                                            className={styles.select}
+                                        >
+                                            <option value="Smart Contracts & Project Development">
+                                                Smart Contracts & Project Development
+                                            </option>
+                                            <option value="Research & Innovation">
+                                                Research & Innovation
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div className={styles.formGroup}>
@@ -218,55 +261,62 @@ export default function ContactForm() {
                                     className={styles.submitButton}
                                     disabled={status === 'loading'}
                                 >
-                                    {status === 'loading' && <span className={styles.spinner}></span>}
-                                    {status === 'idle' && 'Send Message'}
-                                    {status === 'loading' && 'Sending...'}
-                                    {status === 'error' && 'Try Again'}
+                                    {status === 'loading' ? (
+                                        <>
+                                            <span className={styles.spinner} />
+                                            Sending...
+                                        </>
+                                    ) : status === 'error' ? (
+                                        'Try Again'
+                                    ) : (
+                                        <>
+                                            Send Message
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                                            </svg>
+                                        </>
+                                    )}
                                 </button>
 
                                 {status === 'error' && errorMessage && (
-                                    <p className={styles.errorMessage}>
-                                        {errorMessage}
-                                    </p>
+                                    <p className={styles.errorMessage}>{errorMessage}</p>
                                 )}
                             </>
                         ) : status === 'choosing' ? (
                             <div className={styles.successContainer}>
-                                <p className={styles.successMessage}>
-                                    ✓ Data saved successfully! Please choose how you would like to continue:
-                                </p>
+                                <div className={styles.successIcon}>✓</div>
+                                <h3>Message Sent!</h3>
+                                <p>Your message has been received. How would you like to continue?</p>
                                 <div className={styles.successActions}>
                                     <button
                                         type="button"
                                         onClick={() => handleAction(false)}
-                                        className={styles.reserveButton}
+                                        className={styles.actionButton}
                                     >
-                                        📅 Book a Call
+                                        <span>📅</span>
+                                        Book a Call
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => handleAction(true)}
-                                        className={styles.whatsappButton}
+                                        className={`${styles.actionButton} ${styles.whatsapp}`}
                                     >
-                                        💬 Contact by Whatsapp
+                                        <span>💬</span>
+                                        WhatsApp
                                     </button>
                                 </div>
                             </div>
                         ) : (
                             <div className={styles.successContainer}>
-                                <p className={styles.successMessage}>
-                                    ✓ Thank you! We made a note of your preference.
-                                    <br />
-                                    Your message has been received and we'll get back to you within 24 hours.
-                                </p>
-                                <div className={styles.successActions}>
-                                    <button
-                                        onClick={handleNewMessage}
-                                        className={styles.newMessageButton}
-                                    >
-                                        ✉️ Send Another Message
-                                    </button>
-                                </div>
+                                <div className={styles.successIcon}>🎉</div>
+                                <h3>All Set!</h3>
+                                <p>Thank you for reaching out. We&apos;ll get back to you within 24 hours.</p>
+                                <button
+                                    onClick={handleNewMessage}
+                                    className={styles.newMessageButton}
+                                >
+                                    Send Another Message
+                                </button>
                             </div>
                         )}
                     </form>

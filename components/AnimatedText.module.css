@@ -1,0 +1,47 @@
+.container {
+  display: inline;
+}
+
+.cursor {
+  display: inline-block;
+  animation: blink 1s step-end infinite;
+  color: var(--primary);
+  font-weight: 300;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.word {
+  display: inline-block;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.revealContainer {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Gradient text animation */
+.gradientText {
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--primary-light) 25%,
+    var(--primary) 50%,
+    var(--primary-light) 75%,
+    var(--primary) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s linear infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
